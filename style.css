@@ -1,0 +1,377 @@
+:root {
+  --ink: #1b2430;
+  --muted: #5b6573;
+  --line: #cfd6df;
+  --panel: #f3f5f8;
+  --accent: #1f4e8c;
+  --accent-soft: #dce7f5;
+  --bg: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--bg);
+  min-height: 100vh;
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+  
+  grid-template-columns: 100%;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "aside"
+    "footer";
+  grid-template-rows: auto auto 1fr auto auto;
+}
+
+header { grid-area: header; }
+nav    { grid-area: nav; }
+main   { grid-area: main; }
+aside  { grid-area: aside; }
+footer { grid-area: footer; }
+
+header,
+nav,
+main,
+aside,
+footer {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  min-width: 0;
+}
+
+ul { list-style: none; }
+
+a { color: var(--accent); }
+
+a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background: var(--panel);
+}
+
+.logo {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  /* belah ketupat di layar kecil */
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+header h1 {
+  font-size: 1.4rem;
+  flex: 1;
+  text-align: center;
+}
+
+
+nav {
+  max-height: 150px;
+  overflow-y: auto;
+  background: #fff;
+}
+
+nav a {
+  display: block;
+  padding: 9px 16px;
+  color: var(--ink);
+  text-decoration: none;
+  font-style: italic;
+  border-left: 4px solid transparent;
+}
+
+nav a:hover {
+  background: var(--accent-soft);
+}
+
+nav a:focus-visible {
+  outline-offset: -3px;
+}
+
+
+main {
+  padding: 16px 20px;
+  background: #fff;
+}
+
+.panel { display: none; }
+
+#biodata { display: block; }
+
+
+main:has(.panel:target) #biodata:not(:target) { display: none; }
+
+.panel:target { display: block; }
+
+
+body:not(:has(.panel:target)) nav a[href="#biodata"],
+body:has(#biodata:target) nav a[href="#biodata"],
+body:has(#pendidikan:target) nav a[href="#pendidikan"],
+body:has(#pengalaman:target) nav a[href="#pengalaman"],
+body:has(#keahlian:target) nav a[href="#keahlian"],
+body:has(#publikasi:target) nav a[href="#publikasi"] {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+
+
+.panel { scroll-margin-top: 8px; }
+
+main h2 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+main h3 {
+  font-size: 1rem;
+}
+
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 12px;
+}
+
+dt {
+  font-weight: 700;
+  text-align: right;
+}
+
+
+.entries li {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+.entries li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.entries p {
+  color: var(--muted);
+}
+
+.entries .meta {
+  font-size: 0.875rem;
+}
+
+#keahlian h3 {
+  margin: 14px 0 6px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+
+.tags li {
+  font-size: 0.875rem;
+  color: var(--accent);
+}
+
+#publikasi .entries {
+  margin-top: 12px;
+}
+
+aside {
+  padding: 12px 16px;
+  background: #fff;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+aside h2 {
+  font-size: 1rem;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+aside li {
+  font-style: italic;
+}
+
+
+footer {
+  display: grid;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--panel);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.social { color: var(--muted); }
+
+.brand {
+  display: grid;
+}
+
+.brand span { color: var(--muted); }
+
+
+@media (min-width: 600px) {
+  body {
+    padding: 12px;
+    gap: 10px;
+  }
+
+ 
+  nav {
+    max-height: none;
+    overflow: visible;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    border-left: 0;
+    border-bottom: 4px solid transparent;
+    padding: 10px 14px;
+  }
+
+  body:not(:has(.panel:target)) nav a[href="#biodata"],
+  body:has(#biodata:target) nav a[href="#biodata"],
+  body:has(#pendidikan:target) nav a[href="#pendidikan"],
+  body:has(#pengalaman:target) nav a[href="#pengalaman"],
+  body:has(#keahlian:target) nav a[href="#keahlian"],
+  body:has(#publikasi:target) nav a[href="#publikasi"] {
+    border-left-color: transparent;
+    border-bottom-color: var(--accent);
+  }
+
+  
+  aside ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+  }
+
+  footer {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    text-align: left;
+  }
+
+  .copy { text-align: center; }
+
+  .brand { text-align: right; }
+
+  .logo {
+    width: 64px;
+    height: 64px;
+  }
+
+  header h1 { font-size: 1.6rem; }
+}
+
+@media (min-width: 768px) and (orientation: landscape) {
+  body {
+    grid-template-columns: 25% 1fr;
+    grid-template-areas:
+      "header header"
+      "nav    main"
+      "aside  aside"
+      "footer footer";
+    grid-template-rows: auto 1fr auto auto;
+  }
+
+  
+  nav {
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  nav ul {
+    display: block;
+  }
+
+  nav a {
+    border-bottom: 0;
+    border-left: 4px solid transparent;
+    padding: 9px 16px;
+  }
+
+  body:not(:has(.panel:target)) nav a[href="#biodata"],
+  body:has(#biodata:target) nav a[href="#biodata"],
+  body:has(#pendidikan:target) nav a[href="#pendidikan"],
+  body:has(#pengalaman:target) nav a[href="#pengalaman"],
+  body:has(#keahlian:target) nav a[href="#keahlian"],
+  body:has(#publikasi:target) nav a[href="#publikasi"] {
+    border-bottom-color: transparent;
+    border-left-color: var(--accent);
+  }
+
+ 
+  .logo {
+    clip-path: none;
+    border-radius: 6px;
+  }
+
+  header h1 { text-align: left; }
+}
+
+
+@media (min-width: 1200px) {
+  body {
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas:
+      "header header header"
+      "nav    main   aside"
+      "footer footer footer";
+    grid-template-rows: auto 1fr auto;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  aside {
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  aside ul {
+    display: block;
+  }
+
+  main {
+    padding: 24px 32px;
+  }
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
